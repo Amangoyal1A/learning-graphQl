@@ -47,3 +47,37 @@ query getquoteby{
     quote
   }
 }
+
+-----dynamic fetch query ----
+query getuserbyid($userid:ID!){
+  user(id:$userid)
+  {
+    fname
+    email
+    quotes{
+      quote
+    }
+  }
+}
+
+
+*******-----*****
+----createuser in graphql-----
+mutation createUser($userinput: UserInput) {
+  signupUserDummy(userInfo:$userinput){
+   id
+    fname
+    lname
+    password
+    email
+  }  
+  }
+  example :
+  {
+  "userinput": {
+    "fname": "rajacx",
+    "lname": "hindustanixcx",
+    "email": "jkrowling@gmail.comcx",
+    "password": "Shinchaxcn"
+  }
+}
