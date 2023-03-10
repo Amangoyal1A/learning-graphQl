@@ -1,0 +1,49 @@
+------getAlluser----
+query getAllUsers{
+users
+  {
+    fname
+     id
+    email
+  }
+}
+
+-----getAllQuotes----
+query getAllQuotes{
+  quotes{
+    quote
+  }
+}
+
+---complexQuery getAllUserswithQuotes---
+query getAllUsers{
+users
+  {
+    fname
+    id
+    email
+    quotes{
+      quote
+      by
+    }
+  }
+}
+
+----getUserbyID----
+query getuserbyid{
+  user(id:"1")
+  {
+    fname
+    email
+    quotes{
+      quote
+    }
+  }
+}
+---getiquoteby---
+query getquoteby{
+  iquote(by:"2")
+  {
+    quote
+  }
+}
