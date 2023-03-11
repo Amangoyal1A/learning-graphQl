@@ -11,5 +11,5 @@ const Quotes = new mongoose.Schema({
 
 });
 
-mongoose.model("Quote",Quotes)
-module.exports = Quotes
+const Quotesmodel =mongoose.model("Quote",Quotes)
+module.exports = Quotesmodel
