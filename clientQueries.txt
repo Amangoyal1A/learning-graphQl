@@ -3,7 +3,7 @@ query getAllUsers{
 users
   {
     fname
-     id
+     _id
     email
   }
 }
@@ -20,7 +20,7 @@ query getAllUsers{
 users
   {
     fname
-    id
+    _id
     email
     quotes{
       quote
@@ -31,7 +31,7 @@ users
 
 ----getUserbyID----
 query getuserbyid{
-  user(id:"1")
+  user(_id:"1")
   {
     fname
     email
@@ -50,7 +50,7 @@ query getquoteby{
 
 -----dynamic fetch query ----
 query getuserbyid($userid:ID!){
-  user(id:$userid)
+  user(_id:$userid)
   {
     fname
     email
@@ -63,21 +63,37 @@ query getuserbyid($userid:ID!){
 
 *******-----*****
 ----createuser in graphql-----
-mutation createUser($userinput: UserInput) {
-  signupUserDummy(userInfo:$userinput){
-   id
+mutation createUser($userNew: UserInput) {
+  signupUser(userNew: $userNew) {
+    _id
     fname
     lname
-    password
     email
-  }  
+    password
   }
+}
+
+***userinput example**
   example :
-  {
-  "userinput": {
-    "fname": "rajacx",
-    "lname": "hindustanixcx",
-    "email": "jkrowling@gmail.comcx",
-    "password": "Shinchaxcn"
+{
+  "userNew": {
+    "fname": "doples",
+    "lname": "goesl",
+    "email": "ajantamsendis@gmail.com",
+    "password": "hellssdo india"
+  }
+}
+
+-----Login User----
+mutation signinUser($userSignin: UserSigninInput) {
+ signinUser(userSignin:$userSignin) {
+    token
+  }
+}
+*** Login User Example**
+{
+ "userSignin": {
+    "email": "ajantamendis@gmail.com",
+    "password": "hellso india"
   }
 }
