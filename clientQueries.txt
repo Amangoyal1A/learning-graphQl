@@ -97,3 +97,14 @@ mutation signinUser($userSignin: UserSigninInput) {
     "password": "hellso india"
   }
 }
+
+
+-----create Quote----
+mutation createquote{
+  createQuote(quote:"i am best")
+}
+***example***
+in HTTP Headers
+{
+  "authorization":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDBjOTMzYjBmYjcwZDA4M2MzNjg4NWQiLCJpYXQiOjE2Nzg1OTQxMzh9.r-n_OMjMYMpwx0UK_E6oYhKkOv6UF5liI23GNUp8nms"
+}

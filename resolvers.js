@@ -5,6 +5,7 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Usermodel = require("./models/user");
+const Quotesmodel = require("./models/quotes");
 
 // Define the resolvers for the schema
 const resolvers = {
@@ -40,31 +41,41 @@ const resolvers = {
   //     }
   //   }
 
-  Mutation:{
-    signupUser:async (_,{userNew})=>{
-      const user = await Usermodel.findOne({email:userNew.email})
-      if(user){
-          throw new Error("User already exists with that email")
+  Mutation: {
+    signupUser: async (_, { userNew }) => {
+      const user = await Usermodel.findOne({ email: userNew.email });
+      if (user) {
+        throw new Error("User already exists with that email");
       }
-     const hashedPassword =  await bcrypt.hash(userNew.password,12)
+      const hashedPassword = await bcrypt.hash(userNew.password, 12);
 
-    const newUser =  new Usermodel({
-         ...userNew,
-         password:hashedPassword
-     })
-    return await newUser.save()
+      const newUser = new Usermodel({
+        ...userNew,
+        password: hashedPassword,
+      });
+      return await newUser.save();
     },
-    signinUser:async (_,{userSignin})=>{
-     const user = await Usermodel.findOne({email:userSignin.email})
-     if(!user){
-         throw new Error("User dosent exists with that email")
-     }
-     const doMatch =await bcrypt.compare(userSignin.password,user.password)
-     if(!doMatch){
-         throw new Error("email or password in invalid")
-     }
-     const token = jwt.sign({userId:user._id},process.env.JWT_SECRET)
-     return {token}
+    signinUser: async (_, { userSignin }) => {
+      const user = await Usermodel.findOne({ email: userSignin.email });
+      if (!user) {
+        throw new Error("User dosent exists with that email");
+      }
+      const doMatch = await bcrypt.compare(userSignin.password, user.password);
+      if (!doMatch) {
+        throw new Error("email or password in invalid");
+      }
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+      return { token };
+    },
+
+    createQuote: async (_, { quote }, { userId }) => {
+      if (!userId) throw new Error("You must be logged in");
+      const newQuote = new Quotesmodel({
+        quote,
+        by: userId,
+      });
+      await newQuote.save();
+      return "Quote saved successfully";
     },
   },
 };

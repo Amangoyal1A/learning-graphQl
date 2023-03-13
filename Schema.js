@@ -34,6 +34,7 @@ const typeDefs = gql`
 type Mutation{
     signupUser(userNew:UserInput):User
     signinUser(userSignin:UserSigninInput):Token
+    createQuote(quote:String):String
 }
 input UserInput{
    firstName:String
